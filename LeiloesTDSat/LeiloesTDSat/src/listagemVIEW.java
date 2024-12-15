@@ -1,4 +1,7 @@
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -222,4 +225,15 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
     
     }
+    
+      public void venderProduto(int idProduto) {
+    String sql = "UPDATE produtos SET status = ? WHERE id = ?";
+    try (Connection conn = new conectaDAO().connectDB(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, "Vendido");
+        stmt.setInt(2, idProduto);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao vender produto: " + e.getMessage());
+    }
+}
 }
