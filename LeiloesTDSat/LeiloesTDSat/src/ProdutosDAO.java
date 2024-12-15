@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 
@@ -62,7 +63,34 @@ public class ProdutosDAO {
     
     public ArrayList<ProdutosDTO> listarProdutos(){
         
-        return listagem;
+        ArrayList<ProdutosDTO> listagem = new ArrayList<>();  
+        String sql = "SELECT * FROM produtos";  
+
+        
+        try (Connection conn = new conectaDAO().connectDB();  
+             Statement stmt = conn.createStatement();  
+             ResultSet rs = stmt.executeQuery(sql)) { 
+            
+            
+            while (rs.next()) {
+                
+                ProdutosDTO produto = new ProdutosDTO();
+                
+                
+                produto.setId(rs.getInt("id"));  
+                produto.setNome(rs.getString("nome"));  
+                produto.setValor(rs.getInt("valor"));  
+                produto.setStatus(rs.getString("status"));  
+                
+                
+                listagem.add(produto);
+            }
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+        }
+        
+        return listagem;  
     }
     
     
