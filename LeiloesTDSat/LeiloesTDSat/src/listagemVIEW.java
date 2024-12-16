@@ -1,4 +1,7 @@
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -145,8 +148,8 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        Vendas vendas = new Vendas(); 
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -222,4 +225,15 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
     
     }
+    
+      public void venderProduto(int idProduto) {
+    String sql = "UPDATE produtos SET status = ? WHERE id = ?";
+    try (Connection conn = new conectaDAO().connectDB(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, "Vendido");
+        stmt.setInt(2, idProduto);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao vender produto: " + e.getMessage());
+    }
+}
 }
