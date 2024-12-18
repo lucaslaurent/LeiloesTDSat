@@ -22,7 +22,7 @@ public class conectaDAO {
         
         try {
         
-            String url = "jdbc:mysql://localhost:3306/uc11";
+            String url = "jdbc:mysql://127.0.0.1:3306/uc11";
             String user = "root"; 
             String password = "Lucas1123*"; 
             conn = DriverManager.getConnection(url, user, password);
